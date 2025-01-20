@@ -17,7 +17,8 @@ export class PostagemService{
     async findAll(): Promise<Postagem[]>{ //SELECT * FROM tb_postagens;
         return this.postagemRepository.find({
             relations:{
-                tema: true
+                tema: true,
+                usuario: true
             }
         }); 
 
@@ -32,7 +33,8 @@ export class PostagemService{
         },
         
             relations:{
-                tema: true
+                tema: true,
+                usuario: true
             }
     }) 
         if(!postagem)
@@ -46,7 +48,8 @@ export class PostagemService{
             where:{
                 titulo: ILike(`%${titulo}%`) //ILike pq vai ignorar o CASE Sensitive
             }, relations:{
-                tema: true
+                tema: true,
+                usuario: true
             }
         });
 
@@ -61,6 +64,9 @@ export class PostagemService{
     }
 
     async update(postagem: Postagem): Promise<Postagem>{
+        
+        if(!postagem.id || postagem.id <= 0)
+            throw new HttpException('Postagem inválida!', HttpStatus.BAD_REQUEST)
         
         await this.findById(postagem.id)
 
