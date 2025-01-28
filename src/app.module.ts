@@ -29,7 +29,7 @@ import { UsuarioModule } from './usuario/usuario.module';
     UsuarioModule
 
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [],
 })
 export class AppModule {}
